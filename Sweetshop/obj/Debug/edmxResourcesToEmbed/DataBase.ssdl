@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище SweetshopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JoinHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Manadgers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Counts" Type="int" Nullable="false" />
+    <Property Name="DeliveryDate" Type="date" Nullable="false" />
+    <Property Name="Manafacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductType">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RecipeProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdRecipes" Type="int" Nullable="false" />
+    <Property Name="IdProducts" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Recipes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Author" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="DataCreate" Type="date" Nullable="false" />
+    <Property Name="Price" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SysAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_admin_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manadgers_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="Manadgers" Type="Self.Manadgers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Manadgers">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeProduct_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="RecipeProduct" Type="Self.RecipeProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RecipeProduct">
+        <PropertyRef Name="IdProducts" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeProduct_Recipes">
+    <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+    <End Role="RecipeProduct" Type="Self.RecipeProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Recipes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RecipeProduct">
+        <PropertyRef Name="IdRecipes" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recipes_ProductType">
+    <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+    <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Recipes">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysAdmin_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="SysAdmin" Type="Self.SysAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="SysAdmin">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="Хранилище SweetshopModelContainer">
+    <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JoinHistory" EntityType="Self.JoinHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manadgers" EntityType="Self.Manadgers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecipeProduct" EntityType="Self.RecipeProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SysAdmin" EntityType="Self.SysAdmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_admin_AccountType" Association="Self.FK_admin_AccountType">
+      <End Role="AccountType" EntitySet="AccountType" />
+      <End Role="Admin" EntitySet="Admin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manadgers_AccountType" Association="Self.FK_Manadgers_AccountType">
+      <End Role="AccountType" EntitySet="AccountType" />
+      <End Role="Manadgers" EntitySet="Manadgers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeProduct_Products" Association="Self.FK_RecipeProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="RecipeProduct" EntitySet="RecipeProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeProduct_Recipes" Association="Self.FK_RecipeProduct_Recipes">
+      <End Role="Recipes" EntitySet="Recipes" />
+      <End Role="RecipeProduct" EntitySet="RecipeProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipes_ProductType" Association="Self.FK_Recipes_ProductType">
+      <End Role="ProductType" EntitySet="ProductType" />
+      <End Role="Recipes" EntitySet="Recipes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysAdmin_AccountType" Association="Self.FK_SysAdmin_AccountType">
+      <End Role="AccountType" EntitySet="AccountType" />
+      <End Role="SysAdmin" EntitySet="SysAdmin" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

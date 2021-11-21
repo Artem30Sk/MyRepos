@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SweetshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Admins" Relationship="Self.FK_admin_AccountType" FromRole="AccountType" ToRole="Admin" />
+    <NavigationProperty Name="Manadgers" Relationship="Self.FK_Manadgers_AccountType" FromRole="AccountType" ToRole="Manadgers" />
+    <NavigationProperty Name="SysAdmins" Relationship="Self.FK_SysAdmin_AccountType" FromRole="AccountType" ToRole="SysAdmin" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AccountType" Relationship="Self.FK_admin_AccountType" FromRole="Admin" ToRole="AccountType" />
+  </EntityType>
+  <EntityType Name="Manadger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AccountType" Relationship="Self.FK_Manadgers_AccountType" FromRole="Manadgers" ToRole="AccountType" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Counts" Type="Int32" Nullable="false" />
+    <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Manafacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="RecipeProducts" Relationship="Self.FK_RecipeProduct_Products" FromRole="Products" ToRole="RecipeProduct" />
+  </EntityType>
+  <EntityType Name="ProductType">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Recipes" Relationship="Self.FK_Recipes_ProductType" FromRole="ProductType" ToRole="Recipes" />
+  </EntityType>
+  <EntityType Name="RecipeProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdRecipes" Type="Int32" Nullable="false" />
+    <Property Name="IdProducts" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_RecipeProduct_Products" FromRole="RecipeProduct" ToRole="Products" />
+    <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeProduct_Recipes" FromRole="RecipeProduct" ToRole="Recipes" />
+  </EntityType>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="DataCreate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="ProductType" Relationship="Self.FK_Recipes_ProductType" FromRole="Recipes" ToRole="ProductType" />
+    <NavigationProperty Name="RecipeProducts" Relationship="Self.FK_RecipeProduct_Recipes" FromRole="Recipes" ToRole="RecipeProduct" />
+  </EntityType>
+  <EntityType Name="SysAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AccountType" Relationship="Self.FK_SysAdmin_AccountType" FromRole="SysAdmin" ToRole="AccountType" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_admin_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manadgers_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="Manadgers" Type="Self.Manadger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Manadgers">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysAdmin_AccountType">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="SysAdmin" Type="Self.SysAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="SysAdmin">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeProduct_Products">
+    <End Role="Products" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RecipeProduct" Type="Self.RecipeProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RecipeProduct">
+        <PropertyRef Name="IdProducts" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recipes_ProductType">
+    <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+    <End Role="Recipes" Type="Self.Recipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductType">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Recipes">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeProduct_Recipes">
+    <End Role="Recipes" Type="Self.Recipe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RecipeProduct" Type="Self.RecipeProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Recipes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RecipeProduct">
+        <PropertyRef Name="IdRecipes" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SweetshopEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="Manadgers" EntityType="Self.Manadger" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductTypes" EntityType="Self.ProductType" />
+    <EntitySet Name="RecipeProducts" EntityType="Self.RecipeProduct" />
+    <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+    <EntitySet Name="SysAdmins" EntityType="Self.SysAdmin" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_admin_AccountType" Association="Self.FK_admin_AccountType">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manadgers_AccountType" Association="Self.FK_Manadgers_AccountType">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="Manadgers" EntitySet="Manadgers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysAdmin_AccountType" Association="Self.FK_SysAdmin_AccountType">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="SysAdmin" EntitySet="SysAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeProduct_Products" Association="Self.FK_RecipeProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="RecipeProduct" EntitySet="RecipeProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipes_ProductType" Association="Self.FK_Recipes_ProductType">
+      <End Role="ProductType" EntitySet="ProductTypes" />
+      <End Role="Recipes" EntitySet="Recipes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeProduct_Recipes" Association="Self.FK_RecipeProduct_Recipes">
+      <End Role="Recipes" EntitySet="Recipes" />
+      <End Role="RecipeProduct" EntitySet="RecipeProducts" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SweetshopModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SweetshopModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="JoinHistories" EntityType="SweetshopModel.JoinHistory" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="JoinHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+</Schema>
