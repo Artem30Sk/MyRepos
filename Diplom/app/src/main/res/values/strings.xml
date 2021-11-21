@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Diplom</string>
+    <integer name="com_vk_sdk_AppId">7898659</integer>
+</resources>
